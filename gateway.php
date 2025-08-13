@@ -1,7 +1,5 @@
 <?php
 
-//error_log("Manjunath - This is a test error log entry");
-
 /**
  * Globals
  */
