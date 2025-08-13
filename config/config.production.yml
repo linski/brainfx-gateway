@@ -1,0 +1,12 @@
+assessmentDirName: _assessment-data
+logDirName: _logs
+logFileName: data-send-and-save-log.log
+varsFile: '/var/www/pse/production'
+notificationEmailRecipients:
+  - support@brainfx.com
+dbConf:
+  database: 'adminbfx'
+  host: 10.21.32.21
+  port: 3306
+  driver: mysql
+  prefix: ''

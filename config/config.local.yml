@@ -1,0 +1,12 @@
+assessmentDirName: _assessment-data
+logDirName: _logs
+logFileName: data-send-and-save-log.log
+varsFile: './vars/local.yml'
+notificationEmailRecipients:
+  - product@brainfx.com
+dbConf:
+  database: admin.brainfx.com
+  host: localhost
+  port: 3306
+  driver: mysql
+  prefix: ''
