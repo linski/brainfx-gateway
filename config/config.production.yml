@@ -5,8 +5,8 @@ varsFile: '/var/www/pse/production'
 notificationEmailRecipients:
   - support@brainfx.com
 dbConf:
-  database: 'adminbfx'
-  host: 10.21.32.21
-  port: 3306
+  database: 'abc'
+  host: 10.1.2.2
+  port: 2222
   driver: mysql
   prefix: ''
