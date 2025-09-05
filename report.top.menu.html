@@ -1,0 +1,140 @@
+<html><head><style type="text/css">
+
+body {
+	font: 80%/1.0 "Trebuchet MS", Calibri, Arial, Helvetica, sans-serif;
+	background: white url;
+	text-align: left;
+	padding: 0;
+	margin: 0em;
+}
+
+#container {
+	font: 80%/1.0 "Trebuchet MS", Calibri, Arial, Helvetica, sans-serif;
+	width: 52em;
+	background: #ffffff;
+	text-align: left;
+	border: 0px solid #00b5cc;
+	margin: 0 0;
+}
+
+#nav, #nav ul {
+	width: 588888888em;
+	list-style: none;
+	line-height: 1;
+	background: white;
+	font-weight: bold;
+	padding: 0;
+	border: solid #00b5cc;
+	border-width: 1px 0;
+	margin: 1em 0 1em 0;
+}
+
+#nav a {
+	display: block;
+	width: 15em;
+	width: 15em;
+	color: #000000;
+	text-align: left;
+	text-decoration: none;
+	padding: 0.50em 0.25em;
+}
+
+#nav a.daddy {
+	background: url(includes/right_arrow.gif) center left no-repeat;
+}
+
+#nav li {
+	float: left;
+	padding: 0;
+	width: 15em;
+}
+
+#nav li ul {
+	position: absolute;
+	left: -999em;
+	height: auto;
+	width: 15.0em;
+	width: 15.0em;
+	font-weight: normal;
+	border-width: 1px;
+	margin: 0;
+}
+#nav li li {
+	padding-right: 1em;
+	width: 15.0em
+}
+#nav ul ul ul {
+	padding-right: 1em;
+	width: 15.0em
+}
+
+#nav li ul a {
+	width: 15.0em;
+	text-align: left;
+	width: 15.0em;
+}
+
+#nav li:hover, #nav li.sfhover {
+	background: #00b5cc;
+	left: auto;
+}
+
+#nav li:hover ul ul, #nav li.sfhover ul ul {
+	left: -999em;
+}
+
+#nav li:hover ul, #nav li li:hover ul, #nav li.sfhover ul, #nav li li.sfhover ul {
+     left: auto; 
+} 
+
+#content {
+	clear: left;
+}
+
+#content a {
+	color: #ffffff;
+}
+
+#content a:hover {
+	text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+const initNavHover = () => {
+    const navItems = document.querySelectorAll('#nav li');
+    
+    navItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.classList.add('sfhover');
+        });
+
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('sfhover');
+        });
+    });
+};
+document.addEventListener('DOMContentLoaded', initNavHover);
+</script>
+</head>
+<body><div id="container">
+<ul id="nav">
+  <li><a href="my_assessment.php&amp;person=20024&amp;report_id=7027" target="_top">My BrainFx 360 Assessment</a>
+	<ul>			
+	  <li><a href="companion_survey.php&amp;person=20024&amp;report_id=7027" target="_top">Background</a></li>		
+	</ul>
+  </li>	
+  <li><a href="category_scores.php&amp;person=20024&amp;assessment=7027" target="_top">My BrainFx Profile</a>
+  	<ul>
+	  <li><a href="total_score_main.php&amp;person=20024&amp;assessment=7027" target="_top">Understanding Your Performance Data</a></li>
+	  <li><a href="feeling_meter.php&amp;person=20024&amp;assessment=7027" target="_top">How Was I Feeling</a></li>
+    </ul>
+  </li>	
+  <li><a href="sensory_scores.php&amp;person=20024&amp;assessment=7027" target="_top">Sensory and Physical Scores</a></li>	
+  <li><a href="social_scores.php&amp;person=20024&amp;assessment=7027" target="_top">Social and Behavioral Scores</a></li>	
+  <li><a href="foundational_scores.php&amp;person=20024&amp;assessment=7027" target="_top">Foundational Cognitive Skills</a></li>	
+  <li><a href="intermediate_scores.php&amp;person=20024&amp;assessment=7027" target="_top">Intermediate Cognitive Skills</a></li>	
+  <li><a href="complex_scores.php&amp;person=20024&amp;assessment=7027" target="_top">Complex Cognitive Skills</a></li>	
+  <li><a href="universal_skill.php&amp;person=20024&amp;assessment=7027" target="_top">Universal Skills</a></li>
+</ul>
+</div>
+</body></html>
