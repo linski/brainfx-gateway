@@ -1,0 +1,80 @@
+<html lang="en"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OVERALL SCORE</title>
+  <link rel="stylesheet" type="text/css" href="includes/jquery.jqplot.css">
+  <link rel="stylesheet" type="text/css" href="includes/examples.css">
+  <script language="javascript" type="text/javascript" src="includes/jquery-1.4.4.js"></script>
+  
+  <!-- BEGIN: load jqplot -->
+  <script language="javascript" type="text/javascript" src="includes/jquery.jqplot.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/jquery-1.4.4.min.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.barRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.pieRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.highlighter.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.pointLabels.js"></script>
+  <!-- END: load jqplot -->
+
+  <style type="text/css">
+    .jqplot-target {
+        margin-bottom: 2em;
+    }
+    pre {
+        background: #D8F4DC;
+        border: 1px solid rgb(200, 200, 200);
+        padding-top: 1em;
+        padding-left: 3em;
+        padding-bottom: 1em;
+        margin-top: 1em;
+        margin-bottom: 4em;
+        
+    }    
+    p {
+        margin: 2em 0;
+    }    
+    .note {
+        font-size: 0.8em;
+    }
+  </style>
+
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+  line1 = [[0,1],[37,2],[0,3]];
+  line2 = [[49.15,1],[12.15,2],[49.15,3]];
+  line3 = [[11.92,1],[11.92,2],[11.92,3]];
+  line4 = [[2,1],[2,2],[2,3]];
+  line5 = [[11.92,1],[11.92,2],[11.92,3]];
+  line6 = [[25.01,1],[25.01,2],[25.01,3]];
+
+  plot2 = $.jqplot('chart1', [line1, line2, line3, line4, line5, line6], {    stackSeries: true,    legend:{show:false},    title: ' ',    seriesDefaults:{         renderer:$.jqplot.BarRenderer,         rendererOptions:{barDirection: 'horizontal' , barPadding: 0, barMargin: 0}    },    series:[         {label:'actual',color: '#00a1bb'},         {label:'outside -1 std dev ',color: '#83b577'},         {label:'within -1 std dev ',color: '#ffe673'},         {label:'average ',color: '#fbb700'},         {label:'within +1 std dev ',color: '#ffe673'},         {label:'outside +1 std dev ',color: '#83b577'}    ],    axes:{        yaxis: {            renderer:$.jqplot.CategoryAxisRenderer,            ticks:[' ',' ',' '],            tickOptions: {show: false}},         xaxis: {			min:0, max:100, numberTicks: 11, tickOptions: {            	formatString: '%3d'}}    }});
+
+});
+</script>
+
+<base target="_parent">
+</head>
+<body>
+  <bubble-div><input type="button" value="37" style="background-color:#fa8282;" disabled=""></bubble-div><div id="chart1" style="position: absolute; top: 10px; height:70px; left: 300px; width:400px; " class="jqplot-target">
+  <canvas width="400" height="70" class="jqplot-base-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+  <div class="jqplot-title" style="position:absolute;top:0px;left:0px;width:400px;text-align:center;"> </div>
+  <div class="jqplot-axis jqplot-xaxis" style="position: absolute; width: 400px; height: 14px; left: 0px; bottom: 0px;"><div style="position: absolute; left: 7px;" class="jqplot-xaxis-tick">  0</div>
+  <div style="position: absolute; white-space: nowrap; left: 42px;" class="jqplot-xaxis-tick"> 10</div>
+  <div style="position: absolute; white-space: nowrap; left: 80px;" class="jqplot-xaxis-tick"> 20</div>
+  <div style="position: absolute; white-space: nowrap; left: 118px;" class="jqplot-xaxis-tick"> 30</div>
+  <div style="position: absolute; white-space: nowrap; left: 156px;" class="jqplot-xaxis-tick"> 40</div>
+  <div style="position: absolute; white-space: nowrap; left: 194px;" class="jqplot-xaxis-tick"> 50</div>
+  <div style="position: absolute; white-space: nowrap; left: 232px;" class="jqplot-xaxis-tick"> 60</div>
+  <div style="position: absolute; white-space: nowrap; left: 270px;" class="jqplot-xaxis-tick"> 70</div>
+  <div style="position: absolute; white-space: nowrap; left: 308px;" class="jqplot-xaxis-tick"> 80</div>
+  <div style="position: absolute; white-space: nowrap; left: 346px;" class="jqplot-xaxis-tick"> 90</div>
+  <div style="position: absolute; white-space: nowrap; left: 381px;" class="jqplot-xaxis-tick">100</div>
+</div>
+  <div class="jqplot-axis jqplot-yaxis" style="position: absolute; height: 70px; width: 0px; left: 0px; top: 0px;"><div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+  <div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+  <div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+</div>
+  <canvas width="400" height="70" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><div class="jqplot-highlighter-tooltip" style="position:absolute;display:none"></div>
+  <canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas><canvas width="380" height="40" class="jqplot-event-canvas" style="position: absolute; left: 10px; top: 6px;"></canvas></div>
+  <bar-div2><form action="redirect.php?path=feeling_meter.php&amp;person=10799?person=&amp;assessment=7002" method="get"><table class="noborder"><tbody><tr><td class="noborder" width="310"></td><td class="noborder" width="100"><a href="redirect.php?path=feeling_meter.php&amp;person=10799?person=&amp;assessment=7002"><img src="images/feeling_button.png"></a></td></tr></tbody></table></form></bar-div2>
+</body></html>
