@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainFX Overall Score</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .score-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #10b981);
+        }
+
+        .score-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #dc2626, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 120px;
+            margin: 20px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #64748b, #475569);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px -8px rgba(100, 116, 139, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+            }
+
+            .header {
+                padding: 20px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .chart-container {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="main-content">
+            
+
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Overall Performance Score
+                </div>
+            
+                <div class="score-summary">
+                    <div class="score-card">
+                        <div class="score-value">37</div>
+                        <div class="score-label">Your Score</div>
+                    </div>                
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">49.1 - 74.9</div>
+                        <div class="score-label">Score Range</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">62</div>
+                        <div class="score-label">Average Score</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="chart_overall"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Sensory And Physical Skill Performance
+                </div>
+
+                <div class="score-summary">
+                    <div class="score-card">
+                        <div class="score-value">53</div>
+                        <div class="score-label">Your Score</div>
+                    </div>                
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">50 - 77.74</div>
+                        <div class="score-label">Score Range</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">63.9</div>
+                        <div class="score-label">Average Score</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="chart_sensory"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Social and Behavioral Skill Performance
+                </div>                
+
+                <div class="score-summary">
+                    <div class="score-card">
+                        <div class="score-value">24</div>
+                        <div class="score-label">Your Score</div>
+                    </div>                
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">38.2 - 90.4</div>
+                        <div class="score-label">Score Range</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">64.3</div>
+                        <div class="score-label">Average Score</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="chart_social"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Register the annotation plugin
+        Chart.register(window['chartjs-plugin-annotation']);
+
+        const getChartHeader = function( label ) {
+
+            const arr_headers = { 
+                overall: "Overall Performance Score",
+                sensory: "Sensory And Physical Skill Performance",
+                social: "Social and Behavioral Skill Performance",
+            };
+            
+            return label ? arr_headers[label] : "";
+        }    
+
+        const getChartColors = function( label ) {
+
+            const arr_colors = { 
+                "brewer": {
+                  red: "#e41a1c",
+                  yellow: "#ff7f00",
+                  green: "#4daf4a",
+                  blue: "#377eb8",
+                  average: "#FFBB4C",
+                },
+                "material": {
+                  red: "#ef5350",
+                  yellow: "#ffca28",
+                  green: "#66bb6a",
+                  blue: "#42a5f5",
+                  average: "#FFFF7F",
+                },
+                "tableau": {
+                  red: "#e15759",
+                  yellow: "#f28e2b",
+                  green: "#59a14f",
+                  blue: "#5678A7",
+                  average: "#FFBB4C",
+                },
+                "original": {
+                  red: "#E75630",
+                  yellow: "#F2C320",
+                  green: "#49A375",
+                  blue: "#606EE6",
+                  average: "#FFFF7F",
+                },
+            };
+
+            return label ? arr_colors[label] : arr_colors.original;
+        }
+
+        const getChartConfig = function( min_range, max_range, score, avg_score, header ) {
+
+            let range_width = max_range - min_range; 
+            let green_width = 100 - max_range;
+            let colors  = getChartColors("brewer");
+            let headers = getChartHeader(header);
+
+            let config = {
+                type: 'bar',
+                data: {
+                    labels: ['Score'],
+                    datasets: [
+                        {
+                            label: 'first',
+                            data: [ min_range ],
+                            backgroundColor: colors.red,
+                            borderColor: colors.red,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        {
+                            label: 'second',
+                            data: [ range_width ],
+                            backgroundColor: colors.yellow,
+                            borderColor: colors.yellow,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        {
+                            label: 'third',
+                            data: [ green_width ],
+                            backgroundColor: colors.green,
+                            borderColor: colors.green,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    animation: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            mode: 'index',       // or 'index', 'point'
+                            intersect: true,     // tooltip only shows when cursor is directly over a point/bar
+                            position: 'nearest', // makes tooltip follow the mouse cursor
+                            callbacks: {
+                                title: function() {
+                                    return headers[header];
+                                },
+                                label: function(context) {
+
+                                    let label = context.dataset.label;
+                                    if (label === 'first')
+                                        return " Your Score: " + score;
+                                    else if (label === 'second')
+                                        return " Average Score: " + avg_score;
+                                    else if (label === 'third')
+                                        return ` Score Range: ${min_range} - ${max_range}`;
+
+                                    return "";
+                                },
+                                labelColor: function(context) {
+                                  
+                                  let label = context.dataset.label;
+                                  let labelColor = 'white';
+                                  if (label === 'first')
+                                      labelColor = colors.blue; // your score
+                                  else if (label === 'second')
+                                      labelColor = colors.average; // average score
+                                  else if (label === 'third')
+                                      labelColor = colors.yellow; // score range
+                                  
+                                  return {
+                                    borderColor: labelColor,
+                                    backgroundColor: labelColor,
+                                    borderWidth: 2,
+                                    borderRadius: 2
+                                  };
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                averageLine: {
+                                    type: 'line',
+                                    scaleID: 'x',
+                                    xMin: avg_score,
+                                    xMax: avg_score,
+                                    value: avg_score,
+                                    borderColor: colors.average,
+                                    backgroundColor: '#000',
+                                    borderWidth: 3,
+                                    label: {
+                                        content: 'Average Score: 62',
+                                        enabled: true,
+                                        position: 'top'
+                                    }
+                                },
+                                yourScoreLine: {
+                                    type: 'line',
+                                    yMin: 0,
+                                    yMax: 0,
+                                    xMin: 0,
+                                    xMax: score,
+                                    borderColor: colors.blue,
+                                    borderWidth: 22,
+                                    label: {
+                                      content: 'your score',
+                                      enabled: true,
+                                      position: 'center'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: '#64748b',
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                stepSize: 5,
+                            },
+                            title: {
+                                display: true,
+                                text: 'Score Range (0-100)',
+                                color: '#1e293b',
+                                font: {
+                                    size: 14,
+                                    weight: '600'
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            display: false
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            };
+
+            return config;
+        }
+
+        let arr_config = { 
+            overall: [ 49.2, 75, 37, 62.1 ],
+            sensory: [ 50, 77.74, 53, 63.9 ],
+            social:  [ 38.2, 90.4, 24, 64.3 ], 
+        };
+
+        let config_1 = getChartConfig(...arr_config.overall);
+        let config_2 = getChartConfig(...arr_config.sensory);
+        let config_3 = getChartConfig(...arr_config.social);
+        
+        const ctx_1 = document.getElementById('chart_overall').getContext('2d');
+        new Chart(ctx_1, config_1);
+        
+        const ctx_2 = document.getElementById('chart_sensory').getContext('2d');
+        new Chart(ctx_2, config_2);
+
+        const ctx_3 = document.getElementById('chart_social').getContext('2d');
+        new Chart(ctx_3, config_3);
+
+        document.addEventListener('DOMContentLoaded', function() { // Add interactive effects
+            // Animate score cards on load
+            const scoreCards = document.querySelectorAll('.score-card');
+            scoreCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // Add click effects to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        background: rgba(255,255,255,0.5);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        width: 20px;
+                        height: 20px;
+                        left: ${e.clientX - this.offsetLeft - 10}px;
+                        top: ${e.clientY - this.offsetTop - 10}px;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+
+        // Add CSS animation for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
