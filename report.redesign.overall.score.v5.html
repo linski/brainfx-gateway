@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://i.ibb.co/r2PncdgS/favicon.png" type="image/x-icon" data-local-path="img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+    <title>BrainFX Assessment Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+            background-color: #f7f7f8;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .sidebar {
+            width: 320px;
+            height: 100vh;
+            background-color: #171717;
+            color: #f4f4f4;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            border-right: 1px solid #404040;
+            font-size: 14px;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #2a2a2a;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #565869;
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #404040;
+            background-color: #1a1a1a;
+        }
+
+        .brand-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #5e63cf, #059669);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }   
+
+        .assessment-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .nav-menu {
+            padding: 16px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 16px 8px 16px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item {
+            margin-bottom: 2px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 0;
+            transition: all 0.15s ease;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .nav-link:hover {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .nav-link.active {
+            background-color: #374151;
+            color: #f4f4f4;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: #5e63cf;
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .nav-text {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .nav-arrow {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #9ca3af;
+            transition: transform 0.15s ease;
+        }
+
+        .nav-icon .material-icons {
+            font-size: 18px;
+            color: #aaa;
+            transition: color 0.15s ease;
+        }
+
+        .nav-link:hover .nav-icon .material-icons {
+            color: #f4f4f4;
+        }
+
+        .nav-link.active .nav-icon .material-icons {
+            color: #f4f4f4;
+        }
+
+        .has-submenu .nav-arrow {
+            transform: rotate(0deg);
+        }
+
+        .has-submenu.expanded .nav-arrow {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #1f1f1f;
+        }
+
+        .submenu.expanded {
+            max-height: 200px;
+        }
+
+        .submenu .nav-link {
+            padding-left: 44px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .submenu .nav-link:hover {
+            color: #d1d5db;
+            background-color: #262626;
+        }
+
+        .submenu .nav-link.active {
+            color: #f4f4f4;
+            background-color: #404040;
+        }
+
+        .main-content {
+            margin-left: 320px;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .demo-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 32px 32px 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        /* Chart Section Styles */
+        .chart-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .score-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 90px;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #10b981);
+        }
+
+        .score-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #dc2626, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .score-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 140px;
+            flex: 1;
+            margin-top: 28px;
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .mobile-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: #171717;
+                color: #f4f4f4;
+                border: none;
+                border-radius: 6px;
+                padding: 8px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .chart-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .score-summary {
+                flex-direction: row;
+                justify-content: space-around;
+                min-width: auto;
+            }
+
+            .chart-container {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" id="mobileToggle">☰</button>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-title">
+                <img src="https://i.ibb.co/DDQZN8F2/brainfx-logo.png" style="height: 23px;" data-local-path="img/brainfx_logo.png">
+                <div style="display: inline-block;margin-left: -1px;">BrainFx Assessment</div>
+            </div>
+            <div class="assessment-info">
+                Patient ID: 20024 | Report: 7027
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">Assessment Overview</div>
+                <div class="nav-item" data-submenu="assessment">
+                    <a href="../brainfx_v3/my_assessment.php?person=20024&report_id=7027" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">insert_chart</span>
+                        </span>
+                        <span class="nav-text">My BrainFx 360 Assessment</span>
+                    </a>                    
+                </div>
+                
+                <div class="nav-item" data-submenu="profile">
+                    <a href="../brainfx_v3/category_scores.php?person=20024&assessment=7027" class="nav-link active">
+                        <span class="nav-icon"><span class="material-icons">person</span></span>
+                        <span class="nav-text">My BrainFx Profile</span>
+                    </a>
+                    <div class="submenu expanded" id="submenu-profile">
+                        <a href="../brainfx_v3/total_score_main.php?person=20024&assessment=7027" class="nav-link">
+                            <span class="nav-text">Understanding Your Performance Data</span>
+                        </a>
+                        <a href="../brainfx_v3/feeling_meter.php?person=20024&assessment=7027" class="nav-link">
+                            <span class="nav-text">How Was I Feeling</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Score Categories</div>
+                <div class="nav-item">
+                    <a href="../brainfx_v3/sensory_scores.php?person=20024&assessment=7027" class="nav-link">
+                        <i class="iconoir-eye" style="color: #bbb;font-size: 20px;"></i>
+                        <div style="display: inline-block;margin-left: 7px;"><span class="nav-text">Sensory and Physical Scores</span></div>
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="../brainfx_v3/social_scores.php?person=20024&assessment=7027" class="nav-link">
+                        <span class="nav-icon"><span class="material-icons">group</span></span>
+                        <div style="display: inline-block;margin-left: 2px;"><span class="nav-text">Social and Behavioral Scores</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Cognitive Skills</div>
+                <div class="nav-item">
+                    <a href="../brainfx_v3/foundational_scores.php?person=20024&assessment=7027" class="nav-link">
+                        <span class="nav-icon"><span class="material-icons">foundation</span></span>
+                        <span class="nav-text">Foundational Cognitive Skills</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="../brainfx_v3/intermediate_scores.php?person=20024&assessment=7027" class="nav-link">
+                        <span class="nav-icon"><span class="material-icons">settings</span></span>
+                        <span class="nav-text">Intermediate Cognitive Skills</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="../brainfx_v3/complex_scores.php?person=20024&assessment=7027" class="nav-link">
+                        <span class="nav-icon"><span class="material-icons">psychology</span></span>
+                        <span class="nav-text">Complex Cognitive Skills</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="../brainfx_v3/universal_skill.php?person=20024&assessment=7027" class="nav-link">
+                        <span class="nav-icon"><span class="material-icons">stars</span></span>
+                        <span class="nav-text">Universal Skills</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="content-header">
+            <h1 class="content-title">BrainFX 360 Assessment Report</h1>
+            <p class="content-subtitle">Comprehensive cognitive assessment results and analysis</p>
+        </header>
+        <div class="demo-card">
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Overall Performance Score
+                </div>
+
+                <div class="chart-content">
+                    <div class="score-summary">
+                        <div class="score-card">
+                            <div class="score-value">37</div>
+                            <div class="score-label">Your Score</div>
+                        </div>                
+                        <div class="score-card">
+                            <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">62</div>
+                            <div class="score-label">Average Score</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="chart_overall"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Sensory And Physical Skill Performance
+                </div>
+
+                <div class="chart-content">
+                    <div class="score-summary">
+                        <div class="score-card">
+                            <div class="score-value">53</div>
+                            <div class="score-label">Your Score</div>
+                        </div>                
+                        <div class="score-card">
+                            <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">63.9</div>
+                            <div class="score-label">Average Score</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="chart_sensory"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Social and Behavioral Skill Performance
+                </div>                
+
+                <div class="chart-content">
+                    <div class="score-summary">
+                        <div class="score-card">
+                            <div class="score-value">24</div>
+                            <div class="score-label">Your Score</div>
+                        </div>                
+                        <div class="score-card">
+                            <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">63.3</div>
+                            <div class="score-label">Average Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="chart_social"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-title">
+                    <span class="material-icons">bar_chart</span>
+                    Foundational Cognitive Skills Performance
+                </div>                
+
+                <div class="chart-content">
+                    <div class="score-summary">
+                        <div class="score-card">
+                            <div class="score-value">44</div>
+                            <div class="score-label">Your Score</div>
+                        </div>                
+                        <div class="score-card">
+                            <div class="score-value" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">64.3</div>
+                            <div class="score-label">Average Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="chart_foundation"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Register the annotation plugin
+        Chart.register(window['chartjs-plugin-annotation']);
+
+        const getChartHeader = function( label ) {
+            const arr_headers = { 
+                overall: "Overall Performance Score",
+                sensory: "Sensory And Physical Skills",
+                social: "Social and Behavioral Skills",
+                foundation: "Foundational Cognitive Skills",
+            };
+            return label ? arr_headers[label] : "";
+        }    
+
+        const getChartColors = function( label ) {
+            const arr_colors = { 
+                "brewer": {
+                  red: "#e41a1c",
+                  yellow: "#ff7f00",
+                  green: "#4daf4a",
+                  blue: "#377eb8",
+                  average: "#FFBB4C",
+                },
+                "material": {
+                  red: "#ef5350",
+                  yellow: "#ffca28",
+                  green: "#66bb6a",
+                  blue: "#42a5f5",
+                  average: "#FFFF7F",
+                },
+                "tableau": {
+                  red: "#e15759",
+                  yellow: "#f28e2b",
+                  green: "#59a14f",
+                  blue: "#5678A7",
+                  average: "#FFBB4C",
+                },
+                "original": {
+                  red: "#E75630",
+                  yellow: "#F2C320",
+                  green: "#49A375",
+                  blue: "#606EE6",
+                  average: "#FFFF7F",
+                },
+            };
+            return label ? arr_colors[label] : arr_colors.original;
+        }
+
+        const getChartConfig = function( min_range, max_range, score, avg_score, header ) {
+            let range_width = max_range - min_range; 
+            let green_width = 100 - max_range;
+            let colors  = getChartColors("brewer");
+            let headers = getChartHeader(header);
+            console.log(headers);
+
+            let config = {
+                type: 'bar',
+                data: {
+                    labels: ['Score'],
+                    datasets: [
+                        {
+                            label: 'first',
+                            data: [ min_range ],
+                            backgroundColor: colors.red,
+                            borderColor: colors.red,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        {
+                            label: 'second',
+                            data: [ range_width ],
+                            backgroundColor: colors.yellow,
+                            borderColor: colors.yellow,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        {
+                            label: 'third',
+                            data: [ green_width ],
+                            backgroundColor: colors.green,
+                            borderColor: colors.green,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    animation: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            mode: 'index',
+                            intersect: true,
+                            position: 'nearest',
+                            callbacks: {
+                                title: function() {
+                                    return headers;
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label;
+                                    if (label === 'first')
+                                        return " Your Score: " + score;
+                                    else if (label === 'second')
+                                        return " Average Score: " + avg_score;
+                                    else if (label === 'third')
+                                        return ` Score Range: ${min_range} - ${max_range}`;
+                                    return "";
+                                },
+                                labelColor: function(context) {
+                                    let label = context.dataset.label;
+                                    let labelColor = 'white';
+                                    if (label === 'first')
+                                        labelColor = colors.blue;
+                                    else if (label === 'second')
+                                        labelColor = colors.average;
+                                    else if (label === 'third')
+                                        labelColor = colors.yellow;
+                                    
+                                    return {
+                                        borderColor: labelColor,
+                                        backgroundColor: labelColor,
+                                        borderWidth: 2,
+                                        borderRadius: 2
+                                    };
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                averageLine: {
+                                    type: 'line',
+                                    scaleID: 'x',
+                                    xMin: avg_score,
+                                    xMax: avg_score,
+                                    value: avg_score,
+                                    borderColor: colors.average,
+                                    backgroundColor: '#000',
+                                    borderWidth: 3,
+                                    label: {
+                                        content: 'Average Score: 62',
+                                        enabled: true,
+                                        position: 'top'
+                                    }
+                                },
+                                yourScoreLine: {
+                                    type: 'line',
+                                    yMin: 0,
+                                    yMax: 0,
+                                    xMin: 0,
+                                    xMax: score,
+                                    borderColor: colors.blue,
+                                    borderWidth: 22,
+                                    label: {
+                                      content: 'your score',
+                                      enabled: true,
+                                      position: 'center'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: '#64748b',
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                stepSize: 5,
+                            },
+                            title: {
+                                display: true,
+                                text: 'Score Range (0-100)',
+                                color: '#64748b',
+                                font: {
+                                    size: 14,
+                                    weight: '600'
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            display: false
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            };
+            return config;
+        }
+
+        let arr_config = { 
+            overall: [ 49.2, 75, 37, 62.1 ],
+            sensory: [ 50, 77.74, 53, 63.9 ],
+            social:  [ 38.2, 90.4, 24, 64.3 ],
+            foundation: [ 47.9, 78.8, 44, 63.3 ], //    44  63.30
+        };
+
+        let config_1 = getChartConfig(...arr_config.overall, "overall");
+        let config_2 = getChartConfig(...arr_config.sensory, "sensory");
+        let config_3 = getChartConfig(...arr_config.social, "social");
+        let config_4 = getChartConfig(...arr_config.social, "foundation");
+        
+        const ctx_1 = document.getElementById('chart_overall').getContext('2d');
+        new Chart(ctx_1, config_1);
+        
+        const ctx_2 = document.getElementById('chart_sensory').getContext('2d');
+        new Chart(ctx_2, config_2);
+
+        const ctx_3 = document.getElementById('chart_social').getContext('2d');
+        new Chart(ctx_3, config_3);
+
+        const ctx_4 = document.getElementById('chart_foundation').getContext('2d');
+        new Chart(ctx_4, config_4);
+
+        // Enhanced navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            mobileToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-open');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileToggle.contains(e.target)) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            });
+
+            // Submenu toggle functionality
+            const submenuItems = document.querySelectorAll('.has-submenu');
+            
+            submenuItems.forEach(item => {
+                const link = item.querySelector('.nav-link');
+                const submenu = item.querySelector('.submenu');
+                
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').includes('#')) {
+                        e.preventDefault();
+                    }
+                    
+                    item.classList.toggle('expanded');
+                    submenu.classList.toggle('expanded');
+                });
+            });
+
+            // Active link management
+            const navLinks = document.querySelectorAll('.nav-link:not(.has-submenu .nav-link)');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-link').forEach(l => {
+                        l.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                    
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('mobile-open');
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            });
+
+            // Animate score cards on load
+            const scoreCards = document.querySelectorAll('.score-card');
+            scoreCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Add CSS animation for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
