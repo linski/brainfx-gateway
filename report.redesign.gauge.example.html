@@ -1,0 +1,67 @@
+<html lang="en"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Fatigue Level</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.css">  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.8/plugins/jqplot.meterGaugeRenderer.min.js"></script>
+  <style type="text/css">
+    .jqplot-target {
+        margin-bottom: 2em;
+    }
+    
+    pre {
+        background: #D8F4DC;
+        border: 1px solid rgb(200, 200, 200);
+        padding-top: 1em;
+        padding-left: 3em;
+        padding-bottom: 1em;
+        margin-top: 1em;
+        margin-bottom: 4em;
+    }
+    
+    p {
+        margin: 2em 0;
+    }
+    
+    .note {
+        font-size: 0.8em;
+    }
+  </style>
+<script class="code" type="text/javascript">
+$(document).ready(function(){s1 = [3];plot2 = $.jqplot('chart1', [s1], {    
+  title: 'Fatigue Level',    
+seriesDefaults:{         
+  renderer:$.jqplot.MeterGaugeRenderer,         
+  rendererOptions:{
+  ringColor: '#00a1bb',
+  label:'',
+  labelPosition: 'bottom', 
+  min: 0, 
+  max: 5, 
+  intervals: [1.58,2.45,2.85,3.72,5],         
+  intervalColors:['#83b577','#ffe673','#fbb700','#ffe673','#83b577'],         
+  intervalInnerRadius: 5 ,         
+  intervalOuterRadius: 30
+}    }});});</script>
+</head>
+<body>
+  <div id="chart1" style="position: absolute; top: 2px; height:150px;width:150px; " class="jqplot-target"><br><br><br>
+    <canvas width="150" height="150" class="jqplot-base-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <div class="jqplot-title" style="position:absolute;top:0px;left:0px;width:150px;text-align:center;">Fatigue Level</div>
+    <canvas width="150" height="150" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <canvas width="150" height="150" class="jqplot-series-shadowCanvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <canvas width="150" height="150" class="jqplot-series-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 111.548px; top: 104.484px;">5</div>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 104.622px; top: 83.5541px;">4</div>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 84.5479px; top: 68.4188px;">3</div>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 59.4521px; top: 68.4188px;">2</div>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 39.3783px; top: 83.5541px;">1</div>
+  <div class="jqplot-meterGauge-tick" style="position: absolute; left: 32.4524px; top: 104.484px;">0</div>
+  <div class="jqplot-meterGauge-label" style="position: absolute; left: 33px; top: 131px;">Fatigue Level</div>
+  <canvas width="150" height="150" class="jqplot-highlight-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+  <div class="jqplot-highlighter-tooltip" style="position:absolute;display:none"></div>
+  <canvas width="150" height="150" class="jqplot-event-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+</div>
+<div style="margin-left:10em;">Your fatigue level rated on a scale from 1 (Not at all) to 5 (Extremely)</div>
+</body></html>
