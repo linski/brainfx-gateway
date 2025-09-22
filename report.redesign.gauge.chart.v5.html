@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gauge Chart with Needle - Fixed</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .gauge-container {
+            position: relative;
+            width: 500px;
+            height: 350px;
+            margin: 0 auto 30px;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 200px;
+            margin: 0 10px;
+        }
+        
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .value-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .info {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fixed Gauge Chart with Needle</h1>
+        
+        <div class="gauge-container">
+            <canvas id="gaugeChart"></canvas>
+        </div>
+        
+        <div class="value-display" id="valueDisplay">Current Value: 3.0</div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="valueSlider">Value:</label>
+                <input type="range" id="valueSlider" min="1" max="5" step="0.1" value="3">
+                <input type="number" id="valueInput" min="1" max="5" step="0.1" value="3">
+            </div>
+            
+            <div class="control-group">
+                <button onclick="setRandomValue()">Random Value</button>
+                <button onclick="animateGauge()">Animate Sweep</button>
+                <button onclick="resetGauge()">Reset to 3</button>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>Features:</h3>
+            <ul>
+                <li>Range: 1 to 5 (visible around the gauge)</li>
+                <li>Current Value: 3 (needle points correctly)</li>
+                <li>Smooth needle animation</li>
+                <li>4 Color zones: Red (1-2), Orange (2-3), Yellow (3-4), Green (4-5)</li>
+                <li>Interactive controls</li>
+                <li>All labels positioned outside doughnut border</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('gaugeChart').getContext('2d');
+        let currentValue = 3;
+        let gaugeChart;
+
+        // Create the gauge chart
+        function createGauge() {
+            gaugeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [1, 1, 1, 1], // 4 equal zones for 1-2, 2-3, 3-4, 4-5
+                        backgroundColor: [
+                            '#E63F40', // Red (1-2)
+                            '#F2A661', // Orange (2-3)
+                            '#F3EC70', // Yellow (3-4)
+                            '#70D195'  // Green (4-5)
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        cutout: '75%', // Smaller doughnut to make room for labels
+                        circumference: 180, // Half circle (180 degrees)
+                        rotation: 270, // Start from top, rotate to make it bottom semicircle
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    animation: {
+                        duration: 800,
+                        easing: 'easeInOutQuart'
+                    }
+                },
+                plugins: [{
+                    id: 'gaugeNeedleAndLabels',
+                    afterDraw: function(chart) {
+                        drawNeedleAndLabels(chart);
+                    }
+                }]
+            });
+        }
+
+        function drawNeedleAndLabels(chart) {
+            const { ctx, chartArea } = chart;
+            const { top, bottom, left, right } = chartArea;
+            
+            const centerX = (left + right) / 2;
+            const centerY = bottom - 50; // Position for semicircle
+            const radius = Math.min(right - left, (bottom - top) * 2) / 2 * 0.7; // Smaller radius for labels
+            
+            ctx.save();
+            
+            // Draw scale numbers (1, 2, 3, 4, 5) with white background circles
+            for (let i = 1; i <= 5; i++) {
+                const angle = Math.PI + ((i - 1) / 4) * Math.PI; // Fixed: + instead of -
+                const labelRadius = radius + 45; // Increased to place inside doughnut
+                const x = centerX + Math.cos(angle) * labelRadius;
+                const y = centerY + Math.sin(angle) * labelRadius;
+                
+                // Draw white background circle
+                ctx.beginPath();
+                ctx.arc(x, y, 16, 0, 2 * Math.PI);
+                //ctx.fillStyle = '#ffffff';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+                ctx.fill();
+                
+                // Draw border around the circle
+                ctx.beginPath();
+                ctx.arc(x, y, 16, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#cccccc';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Draw the number
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i.toString(), x, y);
+            }
+            
+            // Draw scale ticks
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            
+            // Major ticks (for values 1,2,3,4,5)
+            for (let i = 0; i <= 4; i++) {
+                const angle = Math.PI + (i / 4) * Math.PI; // Fixed: + instead of -
+                const innerRadius = radius + 5;
+                const outerRadius = radius + 20;
+                
+                const x1 = centerX + Math.cos(angle) * innerRadius;
+                const y1 = centerY + Math.sin(angle) * innerRadius;
+                const x2 = centerX + Math.cos(angle) * outerRadius;
+                const y2 = centerY + Math.sin(angle) * outerRadius;
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            // Minor ticks
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 16; i++) { // 16 segments for minor ticks
+                if (i % 4 !== 0) { // Skip major tick positions
+                    const angle = Math.PI + (i / 16) * Math.PI; // Fixed: + instead of -
+                    const innerRadius = radius + 5;
+                    const outerRadius = radius + 12;
+                    
+                    const x1 = centerX + Math.cos(angle) * innerRadius;
+                    const y1 = centerY + Math.sin(angle) * innerRadius;
+                    const x2 = centerX + Math.cos(angle) * outerRadius;
+                    const y2 = centerY + Math.sin(angle) * outerRadius;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+            }
+            
+            // Draw needle
+            const needleAngle = Math.PI + ((currentValue - 1) / 4) * Math.PI; // Fixed: + instead of -
+            const needleLength = radius * 0.9;
+            
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(needleAngle);
+            
+            // Needle shape
+            ctx.beginPath();
+            ctx.moveTo(0, -6);
+            ctx.lineTo(needleLength, -2);
+            ctx.lineTo(needleLength, 2);
+            ctx.lineTo(0, 6);
+            ctx.closePath();
+            
+            // Needle color based on value
+            if (currentValue <= 2) {
+                ctx.fillStyle = '#E63F40'; // Red
+            } else if (currentValue <= 3) {
+                ctx.fillStyle = '#F2A661'; // Orange
+            } else if (currentValue <= 4) {
+                ctx.fillStyle = '#F3EC70'; // Yellow
+            } else {
+                ctx.fillStyle = '#70D195'; // Green
+            }
+            ctx.fill();
+            
+            ctx.restore();
+            
+            // Draw center hub
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = '#666';
+            ctx.fill();
+            
+            // Draw current value text
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 28px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(currentValue.toFixed(1), centerX, centerY + 60);
+            
+            // Draw title
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText('Performance Rating', centerX, centerY + 85);
+            
+            ctx.restore();
+        }
+
+        // Update gauge value
+        function updateGauge(newValue, animate = true) {
+            currentValue = Math.max(1, Math.min(5, newValue));
+            
+            // Update display
+            document.getElementById('valueDisplay').textContent = `Current Value: ${currentValue.toFixed(1)}`;
+            document.getElementById('valueSlider').value = currentValue;
+            document.getElementById('valueInput').value = currentValue.toFixed(1);
+            
+            // Update chart
+            if (animate) {
+                gaugeChart.update();
+            } else {
+                gaugeChart.update('none');
+            }
+        }
+
+        // Event handlers
+        function setRandomValue() {
+            const randomValue = Math.random() * 4 + 1; // Random between 1 and 5
+            updateGauge(randomValue);
+        }
+
+        function animateGauge() {
+            const values = [1, 1.5, 2.5, 3.5, 4.5, 5, 3]; // Sweep animation
+            let index = 0;
+            
+            const interval = setInterval(() => {
+                if (index < values.length) {
+                    updateGauge(values[index]);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 600);
+        }
+
+        function resetGauge() {
+            updateGauge(3);
+        }
+
+        // Input event listeners
+        document.getElementById('valueSlider').addEventListener('input', function() {
+            updateGauge(parseFloat(this.value));
+        });
+
+        document.getElementById('valueInput').addEventListener('change', function() {
+            updateGauge(parseFloat(this.value));
+        });
+
+        // Initialize the chart when page loads
+        window.addEventListener('load', function() {
+            createGauge();
+            updateGauge(3, false);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (gaugeChart) {
+                gaugeChart.resize();
+            }
+        });
+    </script>
+</body>
+</html>
