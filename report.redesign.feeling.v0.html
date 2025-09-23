@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://i.ibb.co/r2PncdgS/favicon.png" type="image/x-icon" data-local-path="img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <title>BrainFX Assessment Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+            background-color: #f7f7f8;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .sidebar {
+            width: 320px;
+            height: 100vh;
+            background-color: #171717;
+            color: #f4f4f4;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            border-right: 1px solid #404040;
+            font-size: 14px;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #2a2a2a;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #565869;
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #404040;
+            background-color: #1a1a1a;
+        }
+
+        .brand-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .assessment-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .nav-menu {
+            padding: 16px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 16px 8px 16px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item {
+            margin-bottom: 2px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 0;
+            transition: all 0.15s ease;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .nav-link:hover {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .nav-link.active {
+            background-color: #374151;
+            color: #f4f4f4;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: #5e63cf;
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .nav-text {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .nav-icon .material-icons {
+            font-size: 18px;
+            color: #aaa;
+            transition: color 0.15s ease;
+        }
+
+        .nav-link:hover .nav-icon .material-icons {
+            color: #f4f4f4;
+        }
+
+        .nav-link.active .nav-icon .material-icons {
+            color: #f4f4f4;
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #1f1f1f;
+        }
+
+        .submenu.expanded {
+            max-height: 200px;
+        }
+
+        .submenu .nav-link {
+            padding-left: 44px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .submenu .nav-link:hover {
+            color: #d1d5db;
+            background-color: #262626;
+        }
+
+        .submenu .nav-link.active {
+            color: #f4f4f4;
+            background-color: #404040;
+        }
+
+        .main-content {
+            margin-left: 320px;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .bfx-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        .bfx-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            vertical-align: middle;
+            margin-left: 8px;
+            margin-bottom: 19px;
+            display: inline-block;
+        }
+
+        .bfx-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .skills-overview {
+            margin-top: 20px;
+        }
+
+        .skill-section {
+            margin-bottom: 32px;
+            padding: 24px;
+            background-color: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .skill-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            flex-grow: 1;
+        }
+
+        .skill-status {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-status.no-concerns {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .skill-status.intermittent {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .skill-status.rushed {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .skill-status.fluctuations {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .skill-description {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .skill-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .gauge-block {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 16px;
+        }
+
+        .gauge-container {
+            position: relative;
+            width: 500px;
+            height: 350px;
+            margin: 0 auto 30px;
+        }
+
+        .results-section {
+            padding: 16px 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            display: inline-block;
+            align-items: center;
+            vertical-align: middle;
+        }
+
+        .results-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .results-list li {
+            padding: 4px 0;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .results-list li .label {
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .results-list li .value {
+            font-weight: 600;
+            color: #111827;
+            background-color: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .gauge-list li {
+            color: #111827;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            display: inline-block;
+            margin-right: 10px;   
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .mobile-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: #171717;
+                color: #f4f4f4;
+                border: none;
+                border-radius: 6px;
+                padding: 8px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .skill-content {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" id="mobileToggle">☰</button>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-title">
+                <img src="https://i.ibb.co/DDQZN8F2/brainfx-logo.png" style="height: 23px;" data-local-path="img/brainfx_logo.png">
+                <div style="display: inline-block;margin-left: -1px;">BrainFx Assessment</div>
+            </div>
+            <div class="assessment-info">
+                <p>Patient: Nicholas Gountounas</p>
+                <p>Assessment Id: 343176294584 | Date: 2025-09-02</p>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">Assessment Overview</div>
+                <div class="nav-item">
+                    <a href="my.assessment.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">insert_chart</span>
+                        </span>
+                        <span class="nav-text">My BrainFx 360 Assessment</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="category.scores.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">person</span>
+                        </span>
+                        <span class="nav-text">My BrainFx Profile</span>
+                    </a>
+                    <div class="submenu expanded" id="submenu-profile">
+                        <a href="understanding.data.php?assessment_key=343176294584" class="nav-link">
+                            <span class="nav-text">Understanding Your Performance Data</span>
+                        </a>
+                        <a href="feeling.meter.php?assessment_key=343176294584" class="nav-link active">
+                            <span class="nav-text">How Was I Feeling</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Score Categories</div>
+                <div class="nav-item">
+                    <a href="sensory.scores.php?assessment_key=343176294584" class="nav-link">
+                        <i class="iconoir-eye" style="color: #bbb;font-size: 20px;"></i>
+                        <div style="margin-left: 7px;" class="nav-text">Sensory and Physical Scores</div>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="social.scores.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">group</span>
+                        </span>
+                        <span class="nav-text">Social and Behavioral Scores</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Cognitive Skills</div>
+                <div class="nav-item">
+                    <a href="foundational.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">foundation</span>
+                        </span>
+                        <span class="nav-text">Foundational Cognitive Skills</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="intermediate.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">settings</span>
+                        </span>
+                        <span class="nav-text">Intermediate Cognitive Skills</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="complex.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">psychology</span>
+                        </span>
+                        <span class="nav-text">Complex Cognitive Skills</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="universal.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">stars</span>
+                        </span>
+                        <span class="nav-text">Universal Skills</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="content-header">
+            <h1 class="content-title">BrainFX 360 Assessment Report</h1>
+            <p class="content-subtitle">Comprehensive cognitive assessment results and analysis</p>
+        </header>
+        <div class="bfx-card">
+            <i class="iconoir-brain" style="color: #000;font-size: 28px;"></i>
+            <h3>How Was I Feeling?</h3>
+            <div class="skills-overview">
+                <div class="skill-section">
+                    <div class="skill-content">
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">Fatigue Level</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart1"></canvas></div>
+                                <div class="gauge-block-right">Your fatigue level rated on a scale from 1 (Not at all) to 5 (Extremely)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">Hours Slept</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart2"></canvas></div>
+                                <div class="gauge-block-right">
+                                    <ul class="gauge-list">
+                                        <li>The number of hours you slept last night:</li>
+                                        <li>1 = Less than 5 hrs</li>
+                                        <li>2 = 5 - 7 hrs</li>
+                                        <li>3 = 7 - 8 hrs</li>
+                                        <li>4 = 8 - 9 hrs</li>
+                                        <li>5 = More than 9</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-section">
+                    <div class="skill-content">
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">ANXIETY LEVEL (EARLY)</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart3"></canvas></div>
+                                <div class="gauge-block-right">Your anxiety level early in the assessment rated on a scale from 1 (Not at all) to 4 (Very)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">ANXIETY LEVEL (LATE)</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart4"></canvas></div>
+                                <div class="gauge-block-right">Your anxiety level late in the assessment rated on a scale from 1 (Not at all) to 4 (Very)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-section">
+                    <div class="skill-content">
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">MOOD SCALE</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart5"></canvas></div>
+                                <div class="gauge-block-right">Your mood rated on a scale from 1 (Sad, Depressed or Down) to 10 (Happy, Awesome, Great)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="results-section">
+                            <span class="material-icons">bar_chart</span>
+                            <h5 class="section-title">PAIN SCALE</h5>
+                            <div class="gauge-container">
+                                <div class="gauge-block-left"><canvas id="gaugeChart6"></canvas></div>
+                                <div class="gauge-block-right">Your pain level rated on a scale from 0 (No Hurt) to 5 (Hurts Worst)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+
+        function getColors( num ) {
+            const arr = [
+                [ 
+                  '#70D195', // Green (1-2)
+                  '#F3EC70', // Yellow (2-3)
+                  '#F2A661', // Orange (3-4)
+                  '#E63F40', // Red (4-5)
+                ],
+                [
+                    '#E63F40', // Red (1-2)
+                    '#F2A661', // Orange (2-3)
+                    '#F3EC70', // Yellow (3-4)
+                    '#70D195'  // Green (4-5)
+                ],
+                [ 
+                  '#70D195', // Green (3-4)
+                  '#F3EC70', // Yellow (2-3)
+                  '#E63F40', // Red (1-2)
+                ],
+                [ 
+                  '#70D195', // Green (3-4)
+                  '#F3EC70', // Yellow (2-3)
+                  '#E63F40', // Red (1-2)
+                ],
+                 [
+                  '#E63F40', // 1 - Red
+                  '#EF725E', // 4 - Orange
+                  '#F38155', //'#E9504A', 
+                  '#F7975C', //'#EC6154', 
+                  '#E8C96A', // 5 - Yellow
+                  '#D5D174', // 6 - Yellow-Light Green
+                  '#C2D87F', // 7 - Light Green
+                  '#AFDF8A', // 8 - Medium Green
+                  '#70D195'  // 9-10 - Green
+                ],
+                [ 
+                  '#70D195', // Green (0-1)
+                  '#F3EC70', // Yellow (1-2)
+                  '#FBAD63', // Orange (2-3)
+                  '#F38155', // Orange-Red (3-4)
+                  '#E63F40', // Red (4-5)
+                ],
+            ];
+
+            return arr[num];
+        }
+
+        function createGauge( gaugeId, currentValue, ind ) {
+            
+            let ctx = document.getElementById(gaugeId).getContext('2d');
+            let arrColors = getColors(ind);
+            let arrSize   = arrColors.length;
+            let arrData   = getFilledArray(arrSize);
+
+            let gaugeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: arrData,
+                        backgroundColor: arrColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        cutout: '75%', // Smaller doughnut to make room for labels
+                        circumference: 180, // Half circle (180 degrees)
+                        rotation: 270, // Start from top, rotate to make it bottom semicircle
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    animation: {
+                        duration: 800,
+                        easing: 'easeInOutQuart'
+                    }
+                },
+                plugins: [{
+                    id: 'gaugeNeedleAndLabels',
+                    afterDraw: function(chart) {
+                        drawNeedleAndLabels(chart, currentValue, arrSize, arrColors);
+                    }
+                }]
+            });
+        }
+
+        function drawNeedleAndLabels(chart, currentValue, size, colors) {
+            let { ctx, chartArea } = chart;
+            let { top, bottom, left, right } = chartArea;
+            
+            let centerX = (left + right) / 2;
+            let centerY = bottom - 25; // Position for semicircle
+            let radius = Math.min(right - left, (bottom - top) * 2) / 2 * 0.7; // Smaller radius for labels
+            let lmt = size + 1;
+            ctx.save();
+            
+            // Draw scale numbers with white background circles
+            for (let i = 1; i <= lmt; i++) {
+                let angle = Math.PI + ((i - 1) / size) * Math.PI;
+                let labelRadius = radius + 45; // Increased to place inside doughnut
+                let x = centerX + Math.cos(angle) * labelRadius;
+                let y = centerY + Math.sin(angle) * labelRadius;
+                
+                // Draw white background circle
+                ctx.beginPath();
+                ctx.arc(x, y, 16, 0, 2 * Math.PI);
+                //ctx.fillStyle = '#ffffff';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+                ctx.fill();
+                
+                // Draw border around the circle
+                ctx.beginPath();
+                ctx.arc(x, y, 16, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#cccccc';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Draw the number
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText((size==5 ? i-1 : i).toString(), x, y);
+            }
+            
+            // Draw scale ticks
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            
+            // Major ticks
+            for (let i = 0; i <= size; i++) {
+                let angle = Math.PI + (i / size) * Math.PI;
+                let innerRadius = radius + 5;
+                let outerRadius = radius + 20;
+                
+                let x1 = centerX + Math.cos(angle) * innerRadius;
+                let y1 = centerY + Math.sin(angle) * innerRadius;
+                let x2 = centerX + Math.cos(angle) * outerRadius;
+                let y2 = centerY + Math.sin(angle) * outerRadius;
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            // Minor ticks
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            let lmt_minor = size * 4;
+            for (let i = 0; i <= lmt_minor; i++) { // size * 4 segments for minor ticks
+                if (i % 4 !== 0) { // Skip major tick positions
+                    let angle = Math.PI + (i / lmt_minor) * Math.PI;
+                    let innerRadius = radius + 5;
+                    let outerRadius = radius + 12;
+                    
+                    let x1 = centerX + Math.cos(angle) * innerRadius;
+                    let y1 = centerY + Math.sin(angle) * innerRadius;
+                    let x2 = centerX + Math.cos(angle) * outerRadius;
+                    let y2 = centerY + Math.sin(angle) * outerRadius;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+            }
+            
+            // Draw needle
+            let needleAngle = Math.PI + ((currentValue - (size==5 ? 0 : 1)) / size) * Math.PI;
+            let needleLength = radius * 0.9;
+            
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(needleAngle);
+            
+            // Needle shape
+            ctx.beginPath();
+            ctx.moveTo(0, -6);
+            ctx.lineTo(needleLength, -2);
+            ctx.lineTo(needleLength, 2);
+            ctx.lineTo(0, 6);
+            ctx.closePath();
+            
+            // Needle color based on value
+            ctx.fillStyle = colors[currentValue - (size == 5 ? 0 : 1) - (colors.length + (size == 5 ? 0 : 1) == currentValue ? 1 : 0 ) ];
+            ctx.fill();
+            
+            ctx.restore();
+            
+            // Draw center hub
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = '#666';
+            ctx.fill();
+            
+            ctx.restore();
+        }
+
+        function getFilledArray(n) {
+            return new Array(n).fill(1);
+        }
+
+        // Initialize the chart when page loads
+        window.addEventListener('load', function() {
+            createGauge('gaugeChart1', 4, 0);
+            createGauge('gaugeChart2', 5, 1);
+            createGauge('gaugeChart3', 2, 2);
+            createGauge('gaugeChart4', 1, 3);
+            createGauge('gaugeChart5', 8, 4);
+            createGauge('gaugeChart6', 5, 5);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (gaugeChart) {
+                gaugeChart.resize();
+            }
+        });
+    </script>
+</body>
+</html>
