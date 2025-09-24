@@ -245,7 +245,7 @@
             color: #6b7280;
         }
 
-        .demo-card {
+        .bfx-card {
             background: #ffffff;
             border-radius: 12px;
             padding: 32px;
@@ -254,7 +254,7 @@
             margin-bottom: 24px;
         }
 
-        .demo-card h3 {
+        .bfx-card h3 {
             font-size: 20px;
             font-weight: 600;
             color: #111827;
@@ -264,7 +264,7 @@
             display: inline-block;
         }
 
-        .demo-card p {
+        .bfx-card p {
             color: #6b7280;
             line-height: 1.6;
         }
@@ -436,25 +436,26 @@
         <div class="nav-menu">
             <div class="nav-section">
                 <div class="nav-section-title">Assessment Overview</div>
-                <div class="nav-item has-submenu" data-submenu="assessment">
-                    <a href="../brainfx_v3/my_assessment.php?person=20024&report_id=7027" class="nav-link active">
+                <div class="nav-item">
+                    <a href="my.assessment.php?assessment_key=343176294584" class="nav-link">
                         <span class="nav-icon">
                             <span class="material-icons">insert_chart</span>
                         </span>
                         <span class="nav-text">My BrainFx 360 Assessment</span>
-                    </a>                    
+                    </a>
                 </div>
-                
-                <div class="nav-item has-submenu" data-submenu="profile">
-                    <a href="../brainfx_v3/category_scores.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">person</span></span>
+                <div class="nav-item">
+                    <a href="category.scores.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">person</span>
+                        </span>
                         <span class="nav-text">My BrainFx Profile</span>
                     </a>
                     <div class="submenu expanded" id="submenu-profile">
-                        <a href="../brainfx_v3/total_score_main.php?person=20024&assessment=7027" class="nav-link">
+                        <a href="understanding.data.php?assessment_key=343176294584" class="nav-link">
                             <span class="nav-text">Understanding Your Performance Data</span>
                         </a>
-                        <a href="../brainfx_v3/feeling_meter.php?person=20024&assessment=7027" class="nav-link">
+                        <a href="feeling.meter.php?assessment_key=343176294584" class="nav-link active">
                             <span class="nav-text">How Was I Feeling</span>
                         </a>
                     </div>
@@ -464,16 +465,17 @@
             <div class="nav-section">
                 <div class="nav-section-title">Score Categories</div>
                 <div class="nav-item">
-                    <a href="../brainfx_v3/sensory_scores.php?person=20024&assessment=7027" class="nav-link">
+                    <a href="sensory.scores.php?assessment_key=343176294584" class="nav-link">
                         <i class="iconoir-eye" style="color: #bbb;font-size: 20px;"></i>
-                        <div style="display: inline-block;margin-left: 7px;"><span class="nav-text">Sensory and Physical Scores</span></div>
+                        <div style="margin-left: 7px;" class="nav-text">Sensory and Physical Scores</div>
                     </a>
                 </div>
-                
                 <div class="nav-item">
-                    <a href="../brainfx_v3/social_scores.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">group</span></span>
-                        <div style="display: inline-block;margin-left: 2px;"><span class="nav-text">Social and Behavioral Scores</span></div>
+                    <a href="social.scores.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">group</span>
+                        </span>
+                        <span class="nav-text">Social and Behavioral Scores</span>
                     </a>
                 </div>
             </div>
@@ -481,29 +483,34 @@
             <div class="nav-section">
                 <div class="nav-section-title">Cognitive Skills</div>
                 <div class="nav-item">
-                    <a href="../brainfx_v3/foundational_scores.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">foundation</span></span>
+                    <a href="foundational.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">foundation</span>
+                        </span>
                         <span class="nav-text">Foundational Cognitive Skills</span>
                     </a>
                 </div>
-                
                 <div class="nav-item">
-                    <a href="../brainfx_v3/intermediate_scores.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">settings</span></span>
+                    <a href="intermediate.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">settings</span>
+                        </span>
                         <span class="nav-text">Intermediate Cognitive Skills</span>
                     </a>
                 </div>
-                
                 <div class="nav-item">
-                    <a href="../brainfx_v3/complex_scores.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">psychology</span></span>
+                    <a href="complex.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">psychology</span>
+                        </span>
                         <span class="nav-text">Complex Cognitive Skills</span>
                     </a>
                 </div>
-                
                 <div class="nav-item">
-                    <a href="../brainfx_v3/universal_skill.php?person=20024&assessment=7027" class="nav-link">
-                        <span class="nav-icon"><span class="material-icons">stars</span></span>
+                    <a href="universal.skills.php?assessment_key=343176294584" class="nav-link">
+                        <span class="nav-icon">
+                            <span class="material-icons">stars</span>
+                        </span>
                         <span class="nav-text">Universal Skills</span>
                     </a>
                 </div>
@@ -516,7 +523,7 @@
             <h1 class="content-title">BrainFX 360 Assessment Report</h1>
             <p class="content-subtitle">Comprehensive cognitive assessment results and analysis</p>
         </header>
-        <div class="demo-card">
+        <div class="bfx-card">
             <i class="iconoir-brain" style="color: #000;font-size: 28px;"></i>
             <h3>My BrainFx 360™ Assessment Overview</h3>
             <p>
