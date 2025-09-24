@@ -1,0 +1,179 @@
+<html lang="en"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OVERALL SCORE</title>
+  
+  <link rel="stylesheet" type="text/css" href="includes/jquery.jqplot.css">
+  <link rel="stylesheet" type="text/css" href="includes/examples.css">
+  
+  <script language="javascript" type="text/javascript" src="includes/jquery-1.4.4.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/jquery.jqplot.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/jquery-1.4.4.min.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.barRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.pieRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.highlighter.js"></script>
+  <script language="javascript" type="text/javascript" src="includes/plugins/jqplot.pointLabels.js"></script>
+
+  <style type="text/css">
+    .jqplot-target {
+        margin-bottom: 2em;
+    }    
+    pre {
+        background: #D8F4DC;
+        border: 1px solid rgb(200, 200, 200);
+        padding-top: 1em;
+        padding-left: 3em;
+        padding-bottom: 1em;
+        margin-top: 1em;
+        margin-bottom: 4em;
+        
+    }    
+    p {
+        margin: 2em 0;
+    }    
+    .note {
+        font-size: 0.8em;
+    }
+  </style>
+<base target="_parent">
+</head>
+<body>
+
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+  line1 = [[0,1],[73,2],[0,3]];
+  line2 = [[48.36,1],[0,2],[48.36,3]];
+  line3 = [[12.28,1],[0,2],[12.28,3]];
+  line4 = [[2,1],[0,2],[2,3]];
+  line5 = [[12.28,1],[1.92,2],[12.28,3]];
+  line6 = [[25.08,1],[25.08,2],[25.08,3]];
+
+  plot2 = $.jqplot('chart1', [line1, line2, line3, line4, line5, line6], { stackSeries: true, legend:{show:false}, title: 'Overall Score', seriesDefaults:{ renderer:$.jqplot.BarRenderer, rendererOptions:{ barDirection: 'horizontal' , barPadding: 0, barMargin: 0}    },    series:[ 
+    {label:'actual',color: '#00a1bb'}, 
+    {label:'outside -1 std dev ',color: '#83b577'}, 
+    {label:'within -1 std dev ',color: '#ffe673'}, 
+    {label:'average ',color: '#fbb700'}, 
+    {label:'within +1 std dev ',color: '#ffe673'}, 
+    {label:'outside +1 std dev ',color: '#83b577'} 
+  ],
+  axes:{ yaxis: { renderer:$.jqplot.CategoryAxisRenderer, ticks:[' ',' ',' '], tickOptions: { show: false} }, xaxis: { min:0, max:100, numberTicks: 11, tickOptions: { formatString: '%3d'} } }});});
+</script>
+  <div id="chart1" style="position: absolute; top: 20px; left: 150px; height:70px;width:400px; " class="jqplot-target">
+    <canvas width="400" height="70" class="jqplot-base-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <div class="jqplot-title" style="position:absolute;top:0px;left:0px;width:400px;text-align:center;">Overall Score</div>
+    <div class="jqplot-axis jqplot-xaxis" style="position: absolute; width: 400px; height: 14px; left: 0px; bottom: 0px;"><div style="position: absolute; left: 7px;" class="jqplot-xaxis-tick">  0</div>
+    <div style="position: absolute; white-space: nowrap; left: 42px;" class="jqplot-xaxis-tick"> 10</div>
+    <div style="position: absolute; white-space: nowrap; left: 80px;" class="jqplot-xaxis-tick"> 20</div>
+    <div style="position: absolute; white-space: nowrap; left: 118px;" class="jqplot-xaxis-tick"> 30</div>
+    <div style="position: absolute; white-space: nowrap; left: 156px;" class="jqplot-xaxis-tick"> 40</div>
+    <div style="position: absolute; white-space: nowrap; left: 194px;" class="jqplot-xaxis-tick"> 50</div>
+    <div style="position: absolute; white-space: nowrap; left: 232px;" class="jqplot-xaxis-tick"> 60</div>
+    <div style="position: absolute; white-space: nowrap; left: 270px;" class="jqplot-xaxis-tick"> 70</div>
+    <div style="position: absolute; white-space: nowrap; left: 308px;" class="jqplot-xaxis-tick"> 80</div>
+    <div style="position: absolute; white-space: nowrap; left: 346px;" class="jqplot-xaxis-tick"> 90</div>
+    <div style="position: absolute; white-space: nowrap; left: 381px;" class="jqplot-xaxis-tick">100</div></div>
+    <div class="jqplot-axis jqplot-yaxis" style="position: absolute; height: 70px; width: 0px; left: 0px; top: 0px;"><div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+    <div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+    <div style="position: absolute;" class="jqplot-yaxis-tick"> </div>
+  </div>
+  <canvas width="400" height="70" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-shadowCanvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-series-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas><div class="jqplot-highlighter-tooltip" style="position:absolute;display:none"></div><canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+  <canvas width="380" height="25" class="jqplot-event-canvas" style="position: absolute; left: 10px; top: 21px;"></canvas>
+</div>
+<bar-div4><form action="redirect.php?path=category_scores.php&amp;person=10815&amp;assessment=7040" method="get">
+<table class="noborder"><tbody>
+  <tr>
+    <td class="noborder" width="100" style="padding-left:50px;"><a href="redirect.php?path=category_scores.php&amp;person=10815&amp;assessment=7040"><img src="images/assessment_button.png"></a></td>
+  </tr></tbody></table></form></bar-div4><bubble-div><input type="button" value="73" style="background-color:#ffe673;" disabled=""></bubble-div><bar-div5><table class="noborder" width="512"><tbody>
+<tr>
+  <td class="noborder" colspan="2"><center><b>LEGEND</b></center></td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><img src="images/outside.png" width="22" height="22"></td><td class="noborder"> Outside +/- 1 Standard Deviation from the Average </td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><img src="images/inside.png" width="22" height="22"></td><td class="noborder"> Within +/- 1 Standard Deviation from the Average </td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><img src="images/average.png" width="22" height="22"></td><td class="noborder"> Average Value </td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><img src="images/score.png" width="22" height="22"></td><td class="noborder"> Your Assessment Value </td>
+</tr>
+<tr>
+  <td class="noborder" colspan="2" style="padding-left:25px;">The number in coloured circle indicates the overall score</td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><div style="width:22px; height:22px; border-radius:50%; background:#fa8282; color:#ffffff; font-family:Calibri; font-size:10pt;">#</div></td>
+  <td colspan="2" class="noborder"> A pink colour indicates a score lower than 1 std deviation from avg</td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><div style="width:22px; height:22px; border-radius:50%; background:#ffe673; color:#ffffff; font-family:Calibri; font-size:10pt;">#</div></td><td colspan="2" class="noborder"> A yellow colour indicates a score within 1 std deviation from avg</td>
+</tr>
+<tr>
+  <td class="noborder" width="15%" align="center"><div style="width:22px; height:22px; border-radius:50%; background:#83b577; color:#ffffff; font-family:Calibri; font-size:10pt;">#</div></td><td colspan="2" class="noborder"> A green colour indicates a score above 1 std deviation from avg</td>
+</tr></tbody></table></bar-div5><div style="position: relative; top: 250px; left: 20px;"><table class="noborder" width="1000"><tbody>
+<tr>
+  <td class="noborder" colspan="6">Your performance has been compared to the performance of everyone who has donated their results to our Living Brain Bank™, which is our de-identified normative database.</td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6"><br></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">As of the date of this report, you are being compared to the following number of people: <b>4801</b></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">Of those people, the following number of people provided information about their age, gender, and medical history: <b>1232</b></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">Description of this sub-group:</td>
+</tr>
+<tr>
+  <td class="noborder" colspan="2">Male: <b>544</b></td><td class="noborder" colspan="3">No neurological history reported: <b>586</b></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="2">Female: <b>686</b></td><td class="noborder" colspan="3">With neurological history reported: <b>646</b></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">Number in each age group:</td>
+</tr>
+<tr>
+  <td class="noborder">Age 25 and under: <b>198</b></td><td class="noborder">Age 24 to 34: <b>268</b></td><td class="noborder">Age 35 to 44: <b>246</b></td><td class="noborder">Age 45 to 54: <b>272</b></td><td class="noborder">Age 55 to 64: <b>212</b></td><td class="noborder">Age 65 and over: <b>36</b></td>
+</tr></tbody></table><table class="noborder" width="900"><tbody>
+<tr>
+  <td class="noborder" colspan="6"><br></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">You will also see brackets with numbers in them under your results. This is your percentile ranking compared to others who completed that specific activity, given parallel versions are automatically embedded in the assessment to minimize learning effects.</td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6"><br></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">Your results are used in calculating category scores for each section and your category scores are used to calculate an overall performance score. If you have stopped the assessment early or skipped activities within a category, a category score may not be able to be calculated and will appear blank or state 'Skipped'.</td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6"><br></td>
+</tr>
+<tr>
+  <td class="noborder" colspan="6">It is critical to interpret not only category scores but individual skills to understand your strengths and challenges. Your CBA or interpreting clinician will consider all of the information in the report and any other information available to them in making any recommendations for you.</td>
+</tr></tbody></table></div>
+</body></html>
