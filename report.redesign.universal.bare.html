@@ -1,0 +1,316 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://i.ibb.co/r2PncdgS/favicon.png" type="image/x-icon" data-local-path="img/favicon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+	* {
+	    margin: 0;
+	    padding: 0;
+	    box-sizing: border-box;
+	}
+
+	body {
+	    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+	    background-color: #f7f7f8;
+	    color: #374151;
+	    line-height: 1.5;
+	}
+	.main-content {
+    margin-left: 320px;
+    padding: 30px 40px;
+    min-height: 100vh;
+	}
+
+	.content-header {
+	    margin-bottom: 22px;
+	}
+
+	.content-title {
+	    font-size: 28px;
+	    font-weight: 700;
+	    color: #111827;
+	    margin-bottom: 8px;
+	}
+
+	.content-subtitle {
+	    font-size: 16px;
+	    color: #6b7280;
+	}
+
+	.bfx-card {
+	    background: #ffffff;
+	    border-radius: 12px;
+	    padding: 24px 32px 32px 32px;
+	    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	    border: 1px solid #e5e7eb;
+	    margin-bottom: 24px;
+	}
+
+	.bfx-card h3 {
+	    font-size: 20px;
+	    font-weight: 600;
+	    color: #111827;
+	    vertical-align: middle;
+	    margin-left: 8px;
+	    margin-bottom: 19px;
+	    display: inline-block;
+	}
+
+	.bfx-card p {
+	    color: #6b7280;
+	    line-height: 1.6;
+	    margin-left: 5px;
+	    margin-top: -3px;
+	}
+
+	.skills-overview {
+	    margin-top: 20px;
+	}
+
+	.skill-section {
+	    margin-bottom: 32px;
+	    padding: 24px;
+	    background-color: #f9fafb;
+	    border-radius: 12px;
+	    border: 1px solid #e5e7eb;
+	}
+
+	.skill-header {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+
+	.skill-title {
+	    font-size: 18px;
+	    font-weight: 600;
+	    color: #111827;
+	    flex-grow: 1;
+	}
+
+	.skill-status {
+	    padding: 6px 16px;
+	    border-radius: 20px;
+	    font-size: 13px;
+	    font-weight: 600;
+	    text-transform: uppercase;
+	    letter-spacing: 0.5px;
+	}
+
+	.skill-status.green {
+	    background-color: #d1fae5;
+	    color: #065f46;
+	}
+
+	.skill-status.blue {
+	    background-color: #e0e7ff;
+	    color: #3730a3;
+	}
+
+	.skill-status.yellow {
+	    background-color: #fef3c7;
+	    color: #92400e;
+	}
+
+	.skill-status.red {
+	    background-color: #fee2e2;
+	    color: #991b1b;
+	}
+
+	.skill-description {
+	    color: #6b7280;
+	    line-height: 1.6;
+	    margin-bottom: 20px;
+	}
+
+	.skill-content {
+	    display: grid;
+	    grid-template-columns: 1fr 1fr;
+	    gap: 24px;
+	    margin-top: 16px;
+	}
+
+	.results-section, .applications-section {
+	    padding: 16px 20px;
+	    background-color: #ffffff;
+	    border-radius: 8px;
+	    border: 1px solid #d1d5db;
+	}
+
+	.section-title {
+	    font-size: 14px;
+	    font-weight: 600;
+	    color: #374151;
+	    text-transform: uppercase;
+	    letter-spacing: 0.5px;
+	    margin-bottom: 12px;
+	    display: flex;
+	    align-items: center;
+	}
+
+	.section-title::before {
+	    content: '▶';
+	    font-size: 10px;
+	    color: #5e63cf;
+	    margin-right: 8px;
+	}
+
+	.results-list {
+	    list-style: none;
+	    padding: 0;
+	}
+
+	.results-list li {
+	    padding: 4px 0;
+	    color: #374151;
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	}
+
+	.results-list li .label {
+	    font-weight: 500;
+	    color: #6b7280;
+	}
+
+	.results-list li .value {
+	    font-weight: 600;
+	    color: #111827;
+	    background-color: #f3f4f6;
+	    padding: 2px 8px;
+	    border-radius: 4px;
+	    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+	    font-size: 12px;
+	}
+
+	.applications-list {
+	    list-style: none;
+	    padding: 0;
+	}
+
+	.applications-list li {
+	    padding: 4px 0;
+	    color: #374151;
+	    display: flex;
+	    align-items: flex-start;
+	}
+
+	.applications-list li::before {
+	    content: '•';
+	    color: #5e63cf;
+	    font-weight: bold;
+	    margin-right: 8px;
+	    margin-top: 2px;
+	}
+
+	.observations-section {
+	    margin-top: 32px;
+	    padding: 24px;
+	    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+	    border: 1px solid #0284c7;
+	    border-radius: 12px;
+	}
+
+	.observations-title {
+	    font-size: 16px;
+	    font-weight: 600;
+	    color: #0c4a6e;
+	    margin-bottom: 12px;
+	    display: flex;
+	    display: inline-block;
+	    vertical-align: middle;
+	    margin-left: 10px;
+	}
+
+	.observations-content {
+	    color: #0c4a6e;
+	    line-height: 1.7;
+	    font-style: italic;
+	}
+</style>
+
+<title>BrainFX Assessment Report</title>
+</head>
+<body>
+
+<main class="main-content">
+<header class="content-header"><h1 class="content-title">BrainFX 360 Assessment Report</h1><p class="content-subtitle">Comprehensive cognitive assessment results and analysis</p></header>
+<div class="bfx-card"><i class="iconoir-brain" style="color: #000;font-size: 28px;"></i>
+<h3>Universal Skills Performance</h3>
+<p>Universal skills represent core cognitive abilities that support all aspects of daily functioning. These skills are foundational to academic, occupational, and social success.</p>
+<div class="skills-overview">
+<div class="skill-section">
+<div class="skill-header"><h4 class="skill-title">Information Processing Speed</h4><span class="skill-status green">Normal</span>
+</div><p class="skill-description"><strong>This means:</strong> Rate that data is manipulated in order to produce useful information.</p>    
+<div class="skill-content">
+<div class="results-section"><h5 class="section-title">Results</h5>
+<ul class="results-list">
+<li><span class="label">Total Performance Time:</span><span class="value">78 minutes</span></li>
+<li><span class="label">CBA Rating:</span><span class="value">Normal</span></li>
+</ul>
+</div>
+<div class="applications-section"><h5 class="section-title">Real Life Applications</h5>
+<ul class="applications-list">
+<li>Pace of and ability to follow conversation</li>
+<li>Length of time that tasks take to complete</li>
+<li>Difficulty completing desired number of tasks over course of day, if affected</li>
+<li>Difficulty learning new information, if affected</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="skill-section">
+<div class="skill-header"><h4 class="skill-title">Endurance</h4><span class="skill-status green">Consistent</span>
+</div><p class="skill-description"><strong>This means:</strong> To sustain cognitive processes without degradation of abilities.</p>
+<div class="skill-content">
+<div class="results-section"><h5 class="section-title">Results</h5>
+<ul class="results-list">
+<li><span class="label">CBA Rating:</span><span class="value">Consistent</span></li>
+</ul>
+</div>
+<div class="applications-section"><h5 class="section-title">Real Life Applications</h5>
+<ul class="applications-list">
+<li>Amount of time at school or work able to tolerate</li>
+<li>Fatiguing or flooding by afternoon/early evening, if affected</li>
+<li>Difficulty regulating emotions, if affected</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="skill-section">
+<div class="skill-header"><h4 class="skill-title">Comprehension &amp; Communication</h4><span class="skill-status yellow">Some difficulty</span>
+</div><p class="skill-description"><strong>This means:</strong> Comprehension: Ability to grasp with intellect information that is written, verbally or visually presented. Communication: Exchange of thoughts, messages, or information through speech, signals, writing, or behaviour.</p>
+<div class="skill-content">
+<div class="results-section"><h5 class="section-title">Results</h5>
+<ul class="results-list">
+<li><span class="label">CBA Rating:</span><span class="value">Some difficulty</span></li>
+</ul>
+</div>
+<div class="applications-section"><h5 class="section-title">Real Life Applications</h5>
+<ul class="applications-list">
+<li>These skills are used for all aspects of daily living (e.g. school, work, social interactions)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="skill-section">
+<div class="skill-header"><h4 class="skill-title">Mood and Behavior</h4><span class="skill-status yellow">Some fluctuations observed</span>
+</div><p class="skill-description"><strong>This means:</strong> The ability to self-regulate emotions during cognitive activities.</p>
+<div class="skill-content">
+<div class="results-section"><h5 class="section-title">Results</h5>
+<ul class="results-list">
+<li><span class="label">CBA Rating:</span><span class="value">Some fluctuations observed</span></li>
+</ul>
+</div>
+<div class="applications-section"><h5 class="section-title">Real Life Applications</h5>
+<ul class="applications-list">
+<li>Low frustration tolerance can lead to disproportionate reactions to the situation from irritability/anger to tearfulness to inappropriate laughter</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main></body></html>
