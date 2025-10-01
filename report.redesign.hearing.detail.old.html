@@ -1,0 +1,92 @@
+<html lang="en"><head>
+  <title>SENSORY AND PHYSICAL SKILL PERFORMANCE</title>
+  <link rel="stylesheet" type="text/css" href="../brainfx_v3/includes/jquery.jqplot.css">
+  <link rel="stylesheet" type="text/css" href="../brainfx_v3/includes/examples.css">
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/jquery-1.4.4.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/jquery.jqplot.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/jquery-1.4.4.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.barRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.pieRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.highlighter.js"></script>
+  <script language="javascript" type="text/javascript" src="../brainfx_v3/includes/plugins/jqplot.pointLabels.js"></script>
+
+  <style type="text/css">
+    .jqplot-target {
+        margin-bottom: 2em;
+    }
+    
+    p { margin: 2em 0; }
+    .note { font-size: 0.8em; }
+  </style>
+<script class="code" type="text/javascript">
+$(document).ready(function(){var line1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,1,1];
+  var ticks=[15,40,60,90,150,300,400,600,800,1500,2500,5000,7000,9000,10000,12000,15000,17000,20000];
+  plot2 = $.jqplot('chart1', [line1], { stackSeries: true, title: 'Hearing by Frequency', seriesDefaults:{ renderer:$.jqplot.BarRenderer, rendererOptions:{fillToZero: true}    },    series:[         {label: 'Heard', color: '#3a7925'},         {label: 'Not Heard', color: '#e17e02'}    ],    axes:{        xaxis: {            label: 'Frequency (Hz)',            renderer:$.jqplot.CategoryAxisRenderer,		  ticks: ticks        },
+    yaxis: { label: 'HEARD ------------- NOT HEARD',            min: -1, max: 1, numberTicks: 3    }}});
+});</script>
+</head>
+<body>
+  <div id="chart1" style="top: 10px; left: 10px ;height:400px;width:1000px; " class="jqplot-target">
+    <canvas width="1000" height="400" class="jqplot-base-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <div class="jqplot-title" style="position:absolute;top:0px;left:0px;width:1000px;text-align:center;">Hearing by Frequency</div>
+    <div class="jqplot-axis jqplot-xaxis" style="position: absolute; width: 1000px; height: 42px; left: 0px; bottom: 0px;">
+    <div style="position: absolute; left: 491px; bottom: 0px;" class="jqplot-xaxis-label">Frequency (Hz)</div>
+    <div style="position: absolute; white-space: nowrap; left: 98.9211px;" class="jqplot-xaxis-tick">15</div>
+    <div style="position: absolute; white-space: nowrap; left: 146.763px;" class="jqplot-xaxis-tick">40</div>
+    <div style="position: absolute; white-space: nowrap; left: 194.605px;" class="jqplot-xaxis-tick">60</div>
+    <div style="position: absolute; white-space: nowrap; left: 242.447px;" class="jqplot-xaxis-tick">90</div>
+    <div style="position: absolute; white-space: nowrap; left: 287.289px;" class="jqplot-xaxis-tick">150</div>
+    <div style="position: absolute; white-space: nowrap; left: 335.132px;" class="jqplot-xaxis-tick">300</div>
+    <div style="position: absolute; white-space: nowrap; left: 382.974px;" class="jqplot-xaxis-tick">400</div>
+    <div style="position: absolute; white-space: nowrap; left: 430.816px;" class="jqplot-xaxis-tick">600</div>
+    <div style="position: absolute; white-space: nowrap; left: 478.658px;" class="jqplot-xaxis-tick">800</div>
+    <div style="position: absolute; white-space: nowrap; left: 523.5px;" class="jqplot-xaxis-tick">1500</div>
+    <div style="position: absolute; white-space: nowrap; left: 571.342px;" class="jqplot-xaxis-tick">2500</div>
+    <div style="position: absolute; white-space: nowrap; left: 619.184px;" class="jqplot-xaxis-tick">5000</div>
+    <div style="position: absolute; white-space: nowrap; left: 667.026px;" class="jqplot-xaxis-tick">7000</div>
+    <div style="position: absolute; white-space: nowrap; left: 714.868px;" class="jqplot-xaxis-tick">9000</div>
+    <div style="position: absolute; white-space: nowrap; left: 759.711px;" class="jqplot-xaxis-tick">10000</div>
+    <div style="position: absolute; white-space: nowrap; left: 807.553px;" class="jqplot-xaxis-tick">12000</div>
+    <div style="position: absolute; white-space: nowrap; left: 855.395px;" class="jqplot-xaxis-tick">15000</div>
+    <div style="position: absolute; white-space: nowrap; left: 903.237px;" class="jqplot-xaxis-tick">17000</div>
+    <div style="position: absolute; white-space: nowrap; left: 951.079px;" class="jqplot-xaxis-tick">20000</div></div>
+    <div class="jqplot-axis jqplot-yaxis" style="position: absolute; height: 400px; width: 71px; left: 0px; top: 0px;">
+      <div style="position: absolute; width: 52px; top: 148.5px; left: 0px;" class="jqplot-yaxis-label">HEARD ------------- NOT HEARD</div>
+    <div style="position: absolute; white-space: nowrap; top: 341px;" class="jqplot-yaxis-tick">-1.0</div>
+    <div style="position: absolute; top: 177.5px;" class="jqplot-yaxis-tick">0.0</div>
+    <div style="position: absolute; white-space: nowrap; top: 14px;" class="jqplot-yaxis-tick">1.0</div></div>
+    <canvas width="1000" height="400" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+    <canvas width="909" height="327" class="jqplot-series-shadowCanvas" style="position: absolute; left: 81px; top: 21px;"></canvas>
+    <canvas width="909" height="327" class="jqplot-series-canvas" style="position: absolute; left: 81px; top: 21px;"></canvas>
+    <canvas width="909" height="327" class="jqplot-highlight-canvas" style="position: absolute; left: 81px; top: 21px;"></canvas>
+    <div class="jqplot-highlighter-tooltip" style="position:absolute;display:none"></div>
+    <canvas width="909" height="327" class="jqplot-barRenderer-highlight-canvas" style="position: absolute; left: 81px; top: 21px;"></canvas>
+    <canvas width="909" height="327" class="jqplot-event-canvas" style="position: absolute; left: 81px; top: 21px;"></canvas>
+  </div><div style="left: 210px; width: 600px;"><center>Total Heard Correctly: 18<br>(90.57)<br>Number of times 'Heard Sounds' was pressed when no sound was presented: 1 <br>(89.53)</center></div>
+<div>
+<br><br>
+  <table width="800" border="1"><tbody>
+    <tr><th width="40%"><br>Hearing (Left, Both, Right)<br><br></th> <th width="20%">Left</th><th width="20%">Both</th><th width="20%">Right</th></tr>
+  <tr><th>Low Frequency - 200Hz</th>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/small_checkmark.gif"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br>
+    </td>
+  </tr>
+  <tr><th>Medium Frequency - 600Hz</th>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+  </tr>
+  <tr><th>High Frequency - 1000Hz</th>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/small_checkmark.gif"></center><br></td>
+    <td><center><br><img src="../brainfx_v3/images/x-mark-small.jpg"></center><br></td>
+  </tr></tbody></table>
+<br><br>
+<center>Total Heard Correctly: 2<br>(15.78)<br>Number of times 'Heard Sound' was pressed when no sound was presented: 0 <br>(0.00)</center>
+</div>
+</body></html>
